@@ -38,3 +38,24 @@ or frontend servers. Any PR that gets merged into master for either repository
 will trigger a new build on DockerHub. That is, a new docker `image` will be
 built. The EC2 instance needs to then run a container from the updated image,
 which is what these scripts accomplish.
+
+# How to deploy.
+First, you'll need the "pem" secret file from [this](https://github.com/KenzieAcademy/kenzie-canvas) repository. I typically just clone the entire repo and `cd` into the `credentials` directory. Once you have it, you can connect to the frontend server using the following command:
+```bash
+ssh -i "kenzie-canvas.pem" ec2-user@18.219.80.82  
+```
+
+For the backend, that becomes:
+```bash
+ssh -i "kenzie-canvas.pem" ec2-user@18.219.106.221
+```
+
+Once there, run the `curl` command from above, passing arguemnts as appropriate. For the frontend, this will most likely be:
+```
+curl -s https://raw.githubusercontent.com/KenzieAcademy/oil-recycling-deployment/master/run.sh | bash -s frontend
+```
+
+For the backend, only the end of the command needs to change:
+```
+curl -s https://raw.githubusercontent.com/KenzieAcademy/oil-recycling-deployment/master/run.sh | bash -s backend
+```
