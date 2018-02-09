@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 
+# calling script to clean docker container
+./clean-docker.sh
+
 # start a mongodb container
 docker run --name oil-recycling-db -d mongo:latest
 
