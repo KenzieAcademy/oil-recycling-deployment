@@ -40,7 +40,14 @@ built. The EC2 instance needs to then run a container from the updated image,
 which is what these scripts accomplish.
 
 # How to deploy.
-First, you'll need the "pem" secret file from [this](https://github.com/KenzieAcademy/kenzie-canvas) repository. I typically just clone the entire repo and `cd` into the `credentials` directory. Once you have it, you can connect to the frontend server using the following command:
+First, you'll need the "pem" secret file from [this](https://github.com/KenzieAcademy/kenzie-canvas) repository. I typically just clone the entire repo and `cd` into the `credentials` directory. 
+
+You'll need to change the permissions of the "pem" file:
+```bash
+chmod 400 kenzie-canvas.pem
+```
+
+Once you have done so, you can connect to the frontend server using the following command:
 ```bash
 ssh -i "kenzie-canvas.pem" ec2-user@18.219.80.82  
 ```
@@ -57,5 +64,5 @@ curl -s https://raw.githubusercontent.com/KenzieAcademy/oil-recycling-deployment
 
 For the backend, only the end of the command needs to change:
 ```
-curl -s https://raw.githubusercontent.com/KenzieAcademy/oil-recycling-deployment/master/run.sh | bash -s backend
+curl -s https://raw.githubusercontent.com/KenzieAcademy/oil-recycling-deployment/master/run.sh | bash -s backend 
 ```
