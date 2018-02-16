@@ -49,30 +49,15 @@ You'll need to change the permissions of the "pem" file:
 chmod 400 kenzie-canvas.pem
 ```
 
-Once you ahve done so, you can deploy from your local machine. Assuming you are
-already in the `credentials` directory mentioned above, you can deploy the
-frontend with:
-
+Once you ahve done so, you can deploy from your local machine. Once you've
+cloned this repository and `cd`ed into the root, you can deploy the frontend
+with:
 ```bash
-curl -s https://raw.githubusercontent.com/KenzieAcademy/oil-recycling-deployment/master/deploy | bash -s frontend
+./deploy frontend /path/to/key-file
 ```
 
 And the backend with:
 
 ```bash
-curl -s https://raw.githubusercontent.com/KenzieAcademy/oil-recycling-deployment/master/deploy | bash -s frontend
-```
-
-If you'd prefer to run the script directly, you can clone this repository and
-run something like this to deploy the front end:
-```bash
-./deploy frontend /path/to/key-file
-```
-
-Or this for the backend:
-```bash
 ./deploy backend /path/to/key-file
 ```
-
-Regardless of how you decide to run the deploy script, remember that it's run
-from your local machine, _not_ the EC2 instance!
