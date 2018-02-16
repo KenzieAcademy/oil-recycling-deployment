@@ -1,68 +1,78 @@
 # Deployment Scripts
 
 This repository contains a few scripts used to ease deployment:
-- clean-docker.sh: removes all instances and containers from a machine
 - launch-backend.sh: launches a backend container along with a mongo container to be accessed by the backend
 - launch-frontend.sh: launches a frontend container
-- run.sh: takes launches a given script with a specific tag
+- deploy: takes three arguments: server to deploy, path to key file, and tag of container to deploy
 
 ## Examples
-To launch backend containers:
+To deploy backend containers:
 ```bash
-./run backend
+./deploy backend /path/to/key-file/
 ```
 
 To launch frontend containers:
 ```bash
-./run frontend
+./deploy frontend /path/to/key-file/
 ```
 
 To launch a given container with a specific tag:
 ```bash
-./run frontend some-tag
+./run frontend /path/to/key-file/ some-tag
 ```
 
-If ommitted, tag is assumed to be "latest".
+If ommitted, tag is assumed to be "latest". If the path to key-file is omitted,
+it is assumed to be a file named "kenzie-canvas.pem" in your current location.
 
-It's often useful to ssh into the instance and curl the run script. For example:
+If you don't have the deployment repository cloned, you can execute a deployment
+using curl:
+
 ```bash
-curl -s https://raw.githubusercontent.com/KenzieAcademy/oil-recycling-deployment/master/run.sh | bash -s frontend some-tag
+curl -s https://raw.githubusercontent.com/KenzieAcademy/oil-recycling-deployment/master/deploy | bash -s frontend /path/to/key-file some-tag
 ```
 
 The above will run frontend containers tagged "some-tag".
 
 ## When to Deploy
 
-The run script should be run any time updates need to be pushed to the backend
+The deploy script should be run any time updates need to be pushed to the backend
 or frontend servers. Any PR that gets merged into master for either repository
 will trigger a new build on DockerHub. That is, a new docker `image` will be
 built. The EC2 instance needs to then run a container from the updated image,
 which is what these scripts accomplish.
 
 # How to deploy.
-First, you'll need the "pem" secret file from [this](https://github.com/KenzieAcademy/kenzie-canvas) repository. I typically just clone the entire repo and `cd` into the `credentials` directory. 
+First, you'll need the "pem" key file from [this](https://github.com/KenzieAcademy/kenzie-canvas) repository. I typically just clone the entire repo and `cd` into the `credentials` directory. 
 
 You'll need to change the permissions of the "pem" file:
 ```bash
 chmod 400 kenzie-canvas.pem
 ```
 
-Once you have done so, you can connect to the frontend server using the following command:
+Once you ahve done so, you can deploy from your local machine. Assuming you are
+already in the `credentials` directory mentioned above, you can deploy the
+frontend with:
+
 ```bash
-ssh -i "kenzie-canvas.pem" ec2-user@18.219.80.82  
+curl -s https://raw.githubusercontent.com/KenzieAcademy/oil-recycling-deployment/master/deploy | bash -s frontend
 ```
 
-For the backend, that becomes:
+And the backend with:
+
 ```bash
-ssh -i "kenzie-canvas.pem" ec2-user@18.219.106.221
+curl -s https://raw.githubusercontent.com/KenzieAcademy/oil-recycling-deployment/master/deploy | bash -s frontend
 ```
 
-Once there, run the `curl` command from above, passing arguemnts as appropriate. For the frontend, this will most likely be:
-```
-curl -s https://raw.githubusercontent.com/KenzieAcademy/oil-recycling-deployment/master/run.sh | bash -s frontend
+If you'd prefer to run the script directly, you can clone this repository and
+run something like this to deploy the front end:
+```bash
+./deploy frontend /path/to/key-file
 ```
 
-For the backend, only the end of the command needs to change:
+Or this for the backend:
+```bash
+./deploy backend /path/to/key-file
 ```
-curl -s https://raw.githubusercontent.com/KenzieAcademy/oil-recycling-deployment/master/run.sh | bash -s backend 
-```
+
+Regardless of how you decide to run the deploy script, remember that it's run
+from your local machine, _not_ the EC2 instance!
