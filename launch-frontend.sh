@@ -10,9 +10,6 @@ echo "removing ALL images..."
 docker rmi --force $(docker images -q)
 
 
-# calling script to clean docker container
-./clean-docker.sh
-
 # Tag of the image we want to grab
 TAG="$1"
 
