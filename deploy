@@ -1,0 +1,25 @@
+#!/bin/env sh
+
+# which server we're building (either "frontend" or "backend"
+SERVER="$1"
+
+# key file
+KEY_FILE="$2"
+KEY_FILE=${KEY_FILE:=kenzie-canvas.pem}
+
+# which tag to use when fetching the docker image
+TAG="$3"
+TAG=${TAG:=latest}
+
+
+# which IP address to use for SSH
+if [[ "$SERVER" == "frontend" ]]; then
+  IP="18.219.80.82"
+elif [[ "$SERVER" == "backend" ]]; then
+  IP="18.219.106.221"
+else
+  echo "Please choose which sever you are deploying (frontend|backend)"
+  exit 1
+fi
+
+ssh -i "$KEY_FILE" ec2-user@$IP "bash -s" -- < ./launch-$SERVER.sh $TAG

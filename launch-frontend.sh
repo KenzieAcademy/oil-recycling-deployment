@@ -1,7 +1,14 @@
 #!/usr/bin/env sh
 
-# calling script to clean docker container
-./clean-docker.sh
+# force remove all containers
+echo "removing ALL containers..."
+docker rm --force $(docker ps -aq)
+
+
+# force remove all images
+echo "removing ALL images..."
+docker rmi --force $(docker images -q)
+
 
 # Tag of the image we want to grab
 TAG="$1"

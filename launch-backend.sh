@@ -1,7 +1,14 @@
 #!/usr/bin/env sh
 
-# calling script to clean docker container
-./clean-docker.sh
+# force remove all containers
+echo "removing ALL containers..."
+docker rm --force $(docker ps -aq)
+
+
+# force remove all images
+echo "removing ALL images..."
+docker rmi --force $(docker images -q)
+
 
 # start a mongodb container
 docker run --name oil-recycling-db -d mongo:latest
