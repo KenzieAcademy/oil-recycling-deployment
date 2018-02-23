@@ -49,11 +49,22 @@ Once you ahve done so, you can deploy from your local machine. Once you've
 cloned this repository and `cd`ed into the root, you can deploy the frontend
 with:
 ```bash
-./deploy frontend /path/to/key-file
+sh ./deploy frontend /path/to/key-file
 ```
 
 And the backend with:
 
 ```bash
-./deploy backend /path/to/key-file
+sh ./deploy backend /path/to/key-file
+```
+
+This repository ignores pem files, so feel free to copy the kenzie-canvas.pem file into the root of your local version of this repository. Deployment then becomes:
+
+```bash
+sh ./deploy frontend
+```
+
+Or
+```bash
+sh ./deploy backend
 ```
