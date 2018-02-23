@@ -8,17 +8,17 @@ This repository contains a few scripts used to ease deployment:
 ## Examples
 To deploy backend containers:
 ```bash
-./deploy backend /path/to/key-file/
+sh ./deploy backend /path/to/key-file/
 ```
 
 To launch frontend containers:
 ```bash
-./deploy frontend /path/to/key-file/
+sh ./deploy frontend /path/to/key-file/
 ```
 
 To launch a given container with a specific tag:
 ```bash
-./run frontend /path/to/key-file/ some-tag
+./deploy frontend /path/to/key-file/ some-tag
 ```
 
 If ommitted, tag is assumed to be "latest". If the path to key-file is omitted,
@@ -26,10 +26,6 @@ it is assumed to be a file named "kenzie-canvas.pem" in your current location.
 
 If you don't have the deployment repository cloned, you can execute a deployment
 using curl:
-
-```bash
-curl -s https://raw.githubusercontent.com/KenzieAcademy/oil-recycling-deployment/master/deploy | bash -s frontend /path/to/key-file some-tag
-```
 
 The above will run frontend containers tagged "some-tag".
 
@@ -53,11 +49,22 @@ Once you ahve done so, you can deploy from your local machine. Once you've
 cloned this repository and `cd`ed into the root, you can deploy the frontend
 with:
 ```bash
-./deploy frontend /path/to/key-file
+sh ./deploy frontend /path/to/key-file
 ```
 
 And the backend with:
 
 ```bash
-./deploy backend /path/to/key-file
+sh ./deploy backend /path/to/key-file
+```
+
+This repository ignores pem files, so feel free to copy the kenzie-canvas.pem file into the root of your local version of this repository. Deployment then becomes:
+
+```bash
+sh ./deploy frontend
+```
+
+Or
+```bash
+sh ./deploy backend
 ```
