@@ -1,17 +1,18 @@
 #!/usr/bin/env sh
 
-# force remove all containers
-echo "removing ALL containers..."
-docker rm --force $(docker ps -aq)
-
-
-# force remove all images
-echo "removing ALL images..."
-docker rmi --force $(docker images -q)
-
-
-# Tag of the image we want to grab
+# Repo and tag of the image we want to grab
+REPO="kenzieacademy"
 TAG="$1"
+
+
+# force stop front-end React container
+echo "killing React container..."
+docker rm --force oil-recycling-fe
+
+# update React image to latest
+echo "updating images..."
+docker pull "$REPO/oil-recycling-project-fe:$TAG"
+
 
 BACKEND_API=http://18.219.106.221
 

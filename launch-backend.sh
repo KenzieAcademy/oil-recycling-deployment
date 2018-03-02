@@ -1,20 +1,22 @@
 #!/usr/bin/env sh
 
-# force remove all containers
-echo "removing ALL containers..."
-docker rm --force $(docker ps -aq)
+# Repo and tag of the image we want to grab
+REPO="kenzieacademy"
+TAG="$1"
 
 
-# force remove all images
-echo "removing ALL images..."
-docker rmi --force $(docker images -q)
+# force stop front-end React container
+echo "killing React container..."
+docker rm --force oil-recycling-fe
+
+# update React image to latest
+echo "updating images..."
+docker pull "$REPO/oil-recycling-node:$TAG"
 
 
 # start a mongodb container
 docker run --name oil-recycling-db -d mongo:latest
 
-# Tag of the image we want to grab
-TAG="$1"
 
 # start backend container pointing to mongo container
 MONGO_HOST=$(docker inspect -f '{{.NetworkSettings.IPAddress}}' oil-recycling-db)
