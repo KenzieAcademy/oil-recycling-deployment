@@ -1,4 +1,4 @@
-#!/bin/env sh
+#!/bin/sh
 
 # which server we're building (either "frontend" or "backend"
 SERVER="$1"
