@@ -7,7 +7,7 @@ TAG="$1"
 
 # force stop front-end React container
 echo "killing React container..."
-docker rm --force oil-recycling-fe
+docker rm --force oil-recycling-node oil-recycling-db
 
 # update React image to latest
 echo "updating images..."
