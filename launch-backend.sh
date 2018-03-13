@@ -20,4 +20,4 @@ docker run --name oil-recycling-db -d mongo:latest
 
 # start backend container pointing to mongo container
 MONGO_HOST=$(docker inspect -f '{{.NetworkSettings.IPAddress}}' oil-recycling-db)
-docker run -e MONGO_HOST=$MONGO_HOST --name oil-recycling-node -p 80:8080 -d kenzieacademy/oil-recycling-node:$TAG
+docker run -e MONGO_HOST=$MONGO_HOST -v /usr/src/app/data/db:/data/db --name oil-recycling-node -p 80:8080 -d kenzieacademy/oil-recycling-node:$TAG
