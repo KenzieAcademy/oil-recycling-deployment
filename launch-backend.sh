@@ -15,7 +15,7 @@ docker pull "$REPO/oil-recycling-node:$TAG"
 
 
 # start a mongodb container
-docker run --name oil-recycling-db -d mongo:latest
+docker run --name oil-recycling-db -v /usr/src/app/data/db:/data/db -d mongo:latest
 
 
 # start backend container pointing to mongo container
