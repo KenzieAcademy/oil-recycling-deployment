@@ -4,11 +4,11 @@
 SERVER="$1"
 
 # key file
-KEY_FILE="$2"
+KEY_FILE="$3"
 KEY_FILE=${KEY_FILE:=kenzie-canvas.pem}
 
 # which tag to use when fetching the docker image
-TAG="$3"
+TAG="$2"
 TAG=${TAG:=latest}
 
 

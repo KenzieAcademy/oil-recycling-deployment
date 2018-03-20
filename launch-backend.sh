@@ -24,3 +24,6 @@ MONGO_HOST=$(docker inspect -f '{{.NetworkSettings.IPAddress}}' oil-recycling-db
 SUPER_USER_EMAIL=admin@kenzie.academy
 SUPER_USER_PASSWORD=password
 docker run -e MONGO_HOST=$MONGO_HOST -e SUPER_USER_EMAIL=$SUPER_USER_EMAIL -e SUPER_USER_PASSWORD=$SUPER_USER_PASSWORD --name oil-recycling-node -p 80:8080 -d kenzieacademy/oil-recycling-node:$TAG npm run prod
+
+echo "Removing old artifacts"
+docker system prune -af
