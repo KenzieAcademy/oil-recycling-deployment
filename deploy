@@ -18,4 +18,4 @@ else
   exit 1
 fi
 
-ssh ec2-user@$IP "bash -s" -- < ./launch-$SERVER.sh $TAG
+ssh -oStrictHostKeyChecking=no ec2-user@$IP "bash -s" -- < ./launch-$SERVER.sh $TAG
