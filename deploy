@@ -3,6 +3,10 @@
 # which server we're building (either "frontend" or "backend"
 SERVER="$1"
 
+# key file
+KEY_FILE="$3"
+KEY_FILE=${KEY_FILE:=kenzie-canvas.pem}
+
 # which tag to use when fetching the docker image
 TAG="$2"
 TAG=${TAG:=latest}
@@ -18,4 +22,4 @@ else
   exit 1
 fi
 
-ssh -oStrictHostKeyChecking=no ec2-user@$IP "bash -s" -- < ./launch-$SERVER.sh $TAG
+ssh -i "$KEY_FILE" ec2-user@$IP "bash -s" -- < ./launch-$SERVER.sh $TAG

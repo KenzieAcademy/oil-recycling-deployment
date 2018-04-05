@@ -1,37 +1,65 @@
 # Deployment Scripts
+
 This repository contains a few scripts used to ease deployment:
 - launch-backend.sh: launches a backend container along with a mongo container to be accessed by the backend
 - launch-frontend.sh: launches a frontend container
 - deploy: takes three arguments: server to deploy, path to key file, and tag of container to deploy
 
-# TL;DR
-Assuming you have the proper SSH keys added to your SSH agent (hint: if this
-sentence doesn't make sense, skip down to "How to Deploy") you can deploy the
-backend with:
-
+## Examples
+To deploy backend containers:
 ```bash
-./deploy backend <tag>
+sh ./deploy backend <tag> </path/to/key-file/>
 ```
 
-And the frontend with:
+To launch frontend containers:
 ```bash
-sh ./deploy frontend <tag>
+sh ./deploy frontend <tag> </path/to/key-file/>
 ```
 
-If ommitted, tag is assumed to be "latest".
+To launch a given container with a specific tag:
+```bash
+./deploy frontend <tag> </path/to/key-file/>
+```
+
+If ommitted, tag is assumed to be "latest". If the path to key-file is omitted,
+it is assumed to be a file named "kenzie-canvas.pem" in your current location.
 
 ## When to Deploy
-These scripts should only be needed in cases where CircleCI failed to properly
-deploy, or cases when we want to manually deploy an old tag.
+
+The deploy script should be run any time updates need to be pushed to the backend
+or frontend servers. Any PR that gets merged into master for either repository
+will trigger a new build on DockerHub. That is, a new docker `image` will be
+built. The EC2 instance needs to then run a container from the updated image,
+which is what these scripts accomplish.
 
 # How to deploy.
-First, you'll need the "pem" key file from
-[here]("https://raw.githubusercontent.com/KenzieAcademy/kenzie-canvas/master/credentials/kenzie-canvas.pem?token=AAFt9v-ioq73PU21YD1maAuFD7ocCdIkks5azJCnwA%3D%3D")
+First, you'll need the "pem" key file from [this](https://github.com/KenzieAcademy/kenzie-canvas) repository. I typically just clone the entire repo and `cd` into the `credentials` directory. 
 
-You'll need to add that "pem" file (private key) to your ssh agent:
+You'll need to change the permissions of the "pem" file:
 ```bash
-eval `ssh-agent -s`
-ssh-add kenzie-canvas.pem
+chmod 400 kenzie-canvas.pem
 ```
 
-Once you have done so, you can deploy from your local machine using the instructions above in "TL;DR".
+Once you ahve done so, you can deploy from your local machine. Once you've
+cloned this repository and `cd`ed into the root, you can deploy the frontend
+with:
+```bash
+sh ./deploy frontend <tag> </path/to/key-file>
+```
+
+And the backend with:
+
+```bash
+sh ./deploy backend <tag> </path/to/key-file>
+```
+
+This repository ignores pem files, so feel free to copy the kenzie-canvas.pem file into the root of your local version of this repository. Deployment then becomes:
+
+```bash
+sh ./deploy frontend
+```
+
+Or
+```bash
+sh ./deploy backend
+```
