@@ -16,7 +16,7 @@ docker pull "$REPO/oil-recycling-project-fe:$TAG"
 
 BACKEND_API=http://18.219.106.221
 
-docker run -e NODE_ENV=production -e REACT_APP_OIL_RECYCLING_API=$BACKEND_API --name oil-recycling-fe -p 80:3000 -d kenzieacademy/oil-recycling-project-fe:$TAG /bin/bash -c "npm run build && npm install -g serve && serve -s build -p 3000"
+docker run -e NODE_ENV=production -e REACT_APP_OIL_RECYCLING_API=$BACKEND_API --name oil-recycling-fe -p 80:3000 -d kenzieacademy/oil-recycling-project-fe:$TAG /bin/bash -c "npm run build && npm install -g serve && serve -s build"
 
 echo "Removing old artifacts"
 docker system prune -af
